@@ -1,8 +1,0 @@
-com/ghostgrid/server/model/MoveResponse.class
-com/ghostgrid/server/model/Position.class
-com/ghostgrid/server/controller/GhostController.class
-com/ghostgrid/server/service/GameStateService.class
-com/ghostgrid/server/ServerApplication.class
-com/ghostgrid/server/model/Message.class
-com/ghostgrid/server/service/MapService.class
-com/ghostgrid/server/model/InteractResponse.class
