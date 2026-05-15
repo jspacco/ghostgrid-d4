@@ -22,3 +22,15 @@
 - `client/src/components/Controls.tsx`
 - `client/src/components/MessageInterface.tsx`
 - `client/src/styles/App.css`
+
+## [Spawn Endpoint Integration]
+- Updated `apiService.ts` to include `spawn` method using `POST /ghosts/spawn`.
+- Modified `App.tsx` to call `handleSpawn` on initial login or page load.
+- Implemented fallback logic in `App.tsx`: if `spawn` fails because the user is "already active", it automatically calls `move('stay')` to synchronize state.
+- Updated `design/client-design.md` to reflect the new explicit spawn protocol.
+
+### Files Created or Modified:
+- `client/src/services/apiService.ts`
+- `client/src/App.tsx`
+- `design/client-design.md`
+- `design/client-changes.md`

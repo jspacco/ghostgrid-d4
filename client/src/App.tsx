@@ -15,13 +15,30 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      handleMove('stay');
+      handleSpawn();
     }
   }, [user]);
 
   const handleLogin = (username: string) => {
     setUser(username);
     localStorage.setItem('ghostUser', username);
+  };
+
+  const handleSpawn = async () => {
+    if (!user) return;
+    try {
+      const data = await apiService.spawn(user);
+      setView(data.view);
+      setCoordinates(data.coordinates);
+      setStatusMessage(data.message);
+    } catch (err: any) {
+      if (err.message === 'User is already active') {
+        // If already active, just sync current state
+        handleMove('stay');
+      } else {
+        setStatusMessage(err.message);
+      }
+    }
   };
 
   const handleMove = async (dir: string) => {

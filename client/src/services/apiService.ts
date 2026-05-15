@@ -28,6 +28,17 @@ export interface InteractResponse {
 }
 
 export const apiService = {
+  spawn: async (user: string): Promise<MoveResponse> => {
+    const response = await fetch(`${BASE_URL}/spawn?user=${user}`, {
+      method: 'POST',
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message || 'Spawn failed');
+    }
+    return data;
+  },
+
   move: async (user: string, dir: string): Promise<MoveResponse> => {
     const response = await fetch(`${BASE_URL}/move?user=${user}&dir=${dir}`);
     const data = await response.json();

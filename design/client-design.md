@@ -6,8 +6,8 @@ A React-based single-page application (SPA) that acts as a frontend for the Ghos
 ## 2. INITIALIZATION & AUTHENTICATION
 - User Entry: On first load, the app displays a "Login" screen asking for a username.
 - Identity: Once entered, the username is stored in React state (or localStorage) and appended as the 'user' parameter to every subsequent API call.
-- Random Spawn: The client's first action after "login" is to call `/ghosts/move?user=USERNAME&dir=stay`. 
-- Server Requirement: The server must handle the "first-time" user logic by placing them on a random 'floor' tile if they do not already have a stored position.
+- Random Spawn: The client's first action after "login" is to call `POST /ghosts/spawn?user=USERNAME`. If the user is already active (e.g., on a page refresh), the client falls back to `GET /ghosts/move?user=USERNAME&dir=stay` to synchronize state.
+- Server Requirement: The server must handle the explicit `/spawn` request by placing new users on a random 'floor' tile.
 
 ## 3. UI COMPONENTS & LAYOUT
 
