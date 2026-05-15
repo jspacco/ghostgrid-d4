@@ -1,6 +1,45 @@
-target/
-*.class
-.mvn/
+# ====================================================================
+# Global System & IDE Garbage
+# ====================================================================
+.DS_Store
+Thumbs.db
 .idea/
-*.iml
-*.log
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# ====================================================================
+# Backend (Java / Gradle) Rules
+# ====================================================================
+# Ignore Gradle build outputs and caches
+server/.gradle/
+server/build/
+server/out/
+
+# Log files
+server/*.log
+
+# ====================================================================
+# Frontend (React / Node) Rules
+# ====================================================================
+# Dependency directories
+client/node_modules/
+client/jspm_packages/
+
+# Production build outputs
+client/build/
+client/dist/
+
+# Local env files (contain keys/secrets)
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+
+# Debug logs
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
