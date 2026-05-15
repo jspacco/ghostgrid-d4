@@ -5,7 +5,7 @@ The Ghost Grid is a synchronous, multiplayer backend where players navigate a 2D
 
 ## 2. WORLD ARCHITECTURE
 * **Coordinate System:** (row, col) with (0,0) at the Top-Left.
-* **Movement:** Up, Down, Left, Right, or Stay (1 square per move).
+* **Movement:** Up, Down, Left, Right, or Wait (1 square per move).
 * **Visibility:** A 5x5 grid centered on the player (player is always at view[2][2]).
 * **Tile Legend:**
     - `floor`: Walkable.
@@ -31,19 +31,19 @@ The Ghost Grid is a synchronous, multiplayer backend where players navigate a 2D
 Updates player location and returns the 5x5 surrounding view.
 - **Method:** GET
 - **Path:** `/ghosts/move`
-- **Params:** `user=[string]`, `dir=[up|down|left|right|stay]`
+- **Params:** `user=[string]`, `dir=[up|down|left|right|wait]`
 - **Success (200 OK):**
   {
     "user": "spacco",
-    "coordinates": { "row": 5, "col": 5 },
+    "coordinates": { "row": 18, "col": 17 },
     "status": "success",
     "message": "Moved south successfully.",
     "view": [
-      ["wall", "wall", "floor", "floor", "floor"],
+      ["floor", "floor", "message_box", "floor", "floor"],
       ["floor", "floor", "floor", "floor", "floor"],
-      ["floor", "floor", "PLAYER", "floor", "floor"],
-      ["floor", "message_box", "floor", "wall", "wall"],
-      ["out_of_bounds", "out_of_bounds", "wall", "wall", "wall"]
+      ["message_box", "floor", "PLAYER", "floor", "floor"],
+      ["wall", "wall", "wall", "wall", "wall"],
+      ["out_of_bounds", "out_of_bounds", "out_of_bounds", "out_of_bounds", "out_of_bounds"]
     ]
   }
 - **Failure (400 Bad Request):** { "status": "error", "message": "Ouch! You hit a wall." }

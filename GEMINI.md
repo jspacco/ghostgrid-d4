@@ -1,61 +1,58 @@
-# Ghost Grid — Gemini CLI Instructions
+# Ghost Grid — Gemini CLI Instructions (D4 Process)
+
+## The D4 Mandate
+This project follows **Design Doc Driven Development (D4)**. Your role is to implement the "syntax" while the human architect manages the "surface, fit, and edge cases" through the design documents. You must treat these documents as the authoritative source of truth.
 
 ## On Every Startup
-Before taking any action, you must read the following files in the design/ folder in this specific order to establish context:
+Read the following files in this specific order to establish architectural context. Do not write any code until this sequence is complete:
 
-1. design/ghost-grid-api.md — The authoritative REST API specification. This is the "contract." Do not deviate from the field names, paths, or HTTP codes defined here.
-2. design/server-design.md — The backend implementation requirements (Spring Boot, Map loading, State management).
-3. design/client-design.md — The frontend implementation requirements (React, 5x5 Grid UI, Random Spawning).
-4. design/server-changes.md — The historical record of all completed backend work.
-5. design/client-changes.md — The historical record of all completed frontend work.
-6. README.md — For high-level project philosophy and repository structure.
-
-Do not write code or modify files until you have confirmed the current state of the project by reading both changes.md files.
+1. README.md — High-level project philosophy and D4 overview.
+2. design/ghost-grid-api.md — The authoritative REST API "Contract."
+3. design/server-design.md — Backend implementation requirements.
+4. design/client-design.md — Frontend implementation requirements.
+5. design/server-changes.md — Historical record of backend work.
+6. design/client-changes.md — Historical record of frontend work.
 
 ---
 
 ## Project Structure
-The project is a monorepo containing a Java backend and a React frontend.
-
 Project Layout:
 ghost-grid/
 ├── server/                  # Spring Boot Backend (Java 17+)
+│   ├── config/              # Local configuration and map.txt
+│   ├── src/                 # Java source code
+│   └── build.gradle         # Gradle build file (MANDATORY)
 ├── client/                  # React Frontend
-├── design/                  # Design Documents & Change Logs
-│   ├── ghost-grid-api.md
-│   ├── server-design.md
-│   ├── client-design.md
-│   ├── server-changes.md
-│   └── client-changes.md
-└── config/
-    └── map.txt              # The authoritative ASCII map file
+├── design/                  # D4 Design Documents & Change Logs
+└── GEMINI.md                # This instruction file
 
 ---
 
 ## Implementation Rules
-- No Database: All server state must be in-memory using ConcurrentHashMap as specified in the design doc.
-- Externalized Map: The server must load its grid from config/map.txt based on the path in application.yaml.
-- Random Spawning: If a new user connects, the server must automatically assign them a valid random 'floor' tile coordinate.
+- Build System: The server MUST use **Gradle**. Do not create a pom.xml.
+- No Database: All server state must be in-memory using ConcurrentHashMap.
+- Externalized Map: The server must load its grid from server/config/map.txt.
+- Random Spawning: New users must be assigned a valid random 'floor' tile coordinate on their first request.
 - Dumb Client: The React client must not calculate game logic; it only renders the 5x5 view array provided by the server.
-- Global CORS: The server must allow requests from the client's origin (standard React development ports).
+- Global CORS: Enable @CrossOrigin for all endpoints to allow React-to-Spring communication.
 
 ---
 
-## After Every Task
-Once a task is complete, you must document your work and commit the changes before moving to the next task.
+## After Every Task (The D4 Audit)
+Once a task is complete, you must document your work to maintain the D4 chain of custody:
 
 1. Update Change Logs:
-   - If you modified the backend, append to design/server-changes.md.
-   - If you modified the frontend, append to design/client-changes.md.
+   - Backend changes -> design/server-changes.md
+   - Frontend changes -> design/client-changes.md
    
-   Format for entries:
-   ## [Title of Work Completed]
-   - Description of changes and logic implemented.
-   - Any architectural decisions made.
-   - List of files created or modified.
+   Format:
+   ## [Task Title]
+   - Description of logic implemented.
+   - Architectural decisions/edge cases handled.
+   - Files created or modified.
 
 2. Commit Changes:
-   Execute: git add -A && git commit -m "[Server/Client]: [Title of Work]"
+   Execute: git add -A && git commit -m "[Server/Client]: [D4 Task Name]"
 
 ## Final Guardrail
-If a design document is ambiguous or contradicts a previous implementation, stop and ask for clarification before proceeding.
+You are a literal-minded implementation agent. If a D4 design document is ambiguous or contradicts a previous implementation, STOP and ask the Human Architect for clarification.
