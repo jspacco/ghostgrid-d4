@@ -1,0 +1,4 @@
+ghostgrid:
+  map-path: config/map.txt
+server:
+  port: 8080
