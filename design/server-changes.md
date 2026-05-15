@@ -11,16 +11,18 @@
 - Implemented manual boilerplate (getters, setters, loggers) instead of Lombok for better build stability.
 - Verified core logic with JUnit tests.
 
+## [Spawn Endpoint Implementation]
+- Implemented `POST /ghosts/spawn` endpoint in `GhostController` for explicit player registration.
+- Added `playerExists` and `spawnPlayer` methods to `GameStateService`.
+- Enforced unique username validation for spawning (returns 400 Bad Request if user already active).
+- Added `GhostControllerTest` integration tests to verify successful spawn and failure on duplicate user.
+- Updated `design/ghost-grid-api.md` to remove Java-specific data structures and add the spawn contract.
+- Updated `design/server-design.md` to include in-memory architecture specifications and spawn logic requirements.
+
 ### Files Created or Modified:
-- `server/pom.xml`
-- `server/src/main/resources/application.yaml`
-- `server/src/main/java/com/ghostgrid/server/ServerApplication.java`
-- `server/src/main/java/com/ghostgrid/server/model/Position.java`
-- `server/src/main/java/com/ghostgrid/server/model/Message.java`
-- `server/src/main/java/com/ghostgrid/server/model/MoveResponse.java`
-- `server/src/main/java/com/ghostgrid/server/model/InteractResponse.java`
-- `server/src/main/java/com/ghostgrid/server/service/MapService.java`
-- `server/src/main/java/com/ghostgrid/server/service/GameStateService.java`
-- `server/src/main/java/com/ghostgrid/server/controller/GhostController.java`
-- `server/src/test/java/com/ghostgrid/server/ServerApplicationTests.java`
-- `config/map.txt`
+- `design/ghost-grid-api.md`
+- `design/server-design.md`
+- `server/src/main/java/knox/ghostgrid/server/service/GameStateService.java`
+- `server/src/main/java/knox/ghostgrid/server/controller/GhostController.java`
+- `server/src/test/java/knox/ghostgrid/server/controller/GhostControllerTest.java`
+- `design/server-changes.md`

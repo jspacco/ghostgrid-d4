@@ -19,15 +19,23 @@ The Ghost Grid is a synchronous, multiplayer backend where players navigate a 2D
 - **Symbols:** '#' (Wall), '.' (Floor), 'M' (Message Box).
 - **Resource Handling:** Loads from absolute path first, with a ClassPath fallback.
 
-### B. State Management (In-Memory)
-- **Player Registry:** `ConcurrentHashMap<String, Position>` (username -> coordinates). 
-- **Spawning:** New users are automatically initialized at a valid random 'floor' tile.
-- **Message Registry:** `ConcurrentHashMap<Position, List<Message>>` (box coordinates -> messages). 
-- **Message Ordering:** Newest messages are prepended to index 0.
+### B. State Management
+- **Player Registry:** Stores username to current coordinates mapping.
+- **Spawning:** New users are initialized at a valid random 'floor' tile via the spawn endpoint.
+- **Message Registry:** Stores message box coordinates to message list mapping.
+- **Message Ordering:** Newest messages are prioritized (e.g., index 0).
 
 ## 4. REST API SPECIFICATION
 
-### A. MOVE / LOOK
+### A. SPAWN
+Registers a new player and assigns them an initial random floor tile.
+- **Method:** POST
+- **Path:** `/ghosts/spawn`
+- **Params:** `user=[string]`
+- **Success (201 Created):** Returns the initial player coordinates and 5x5 view array.
+- **Failure (400 Bad Request):** If the user is already active/spawned in the session.
+
+### B. MOVE / LOOK
 Updates player location and returns the 5x5 surrounding view.
 - **Method:** GET
 - **Path:** `/ghosts/move`
@@ -48,7 +56,7 @@ Updates player location and returns the 5x5 surrounding view.
   }
 - **Failure (400 Bad Request):** { "status": "error", "message": "Ouch! You hit a wall." }
 
-### B. INTERACT (READ)
+### C. INTERACT (READ)
 Retrieves the message list from a message_box in a specific direction.
 - **Method:** GET
 - **Path:** `/ghosts/interact`
@@ -62,7 +70,7 @@ Retrieves the message list from a message_box in a specific direction.
     ]
   }
 
-### C. INTERACT (WRITE)
+### D. INTERACT (WRITE)
 Leaves a new message in the box in a specific direction.
 - **Method:** POST
 - **Path:** `/ghosts/interact`

@@ -31,7 +31,7 @@ The server maintains a shared world state using thread-safe collections to suppo
 
 ### A. Player Registry
 - **Data Structure**: `ConcurrentHashMap<String, Position>`.
-- **Logic**: Maps a "username" to their current (row, col) coordinates. If a user is seen for the first time, the server must automatically assign them a valid random 'floor' tile coordinate.
+- **Logic**: Maps a "username" to their current (row, col) coordinates.
 
 ### B. Message Registry
 - **Data Structure**: `ConcurrentHashMap<Position, List<Message>>`.
@@ -41,13 +41,20 @@ The server maintains a shared world state using thread-safe collections to suppo
 
 ## 5. ENGINE LOGIC & VALIDATION
 
-### A. The 5x5 Visibility Engine
-For every movement or "look" request, the server generates a 5x5 sub-grid centered on the player (where the player is index [2,2]).
+### A. Spawning Logic (/ghosts/spawn)
+- **Endpoint**: `POST /ghosts/spawn?user=[username]`
+- **Validation**: If the username already exists in the `Player Registry`, return a 400 Bad Request error ("User is already active").
+- **Assignment**: Assign the user a valid random 'floor' tile coordinate.
+- **Initialization**: Store the user's initial position and return the 5x5 visibility window.
+
+### B. The 5x5 Visibility Engine
+For every movement, look, or spawn request, the server generates a 5x5 sub-grid centered on the player (where the player is index [2,2]).
 - **Boundary Protection**: For any coordinate in the 5x5 window that falls outside the map dimensions, the server must return "out_of_bounds" for that tile.
 
-### B. Movement Rules
+### C. Movement Rules (/ghosts/move)
 - **Valid Moves**: Players can only move into 'floor' tiles.
 - **Blocked Moves**: Attempts to move into 'wall', 'message_box', or 'out_of_bounds' must fail (triggering the API's 400 error).
+- **Auto-Registration**: If a user is seen for the first time on a `/move` request without having spawned, they should be automatically spawned (legacy support).
 
 ### C. Interaction Rules
 - Interaction is only valid if the tile exactly 1 square away in the user's specified direction is a 'message_box'.

@@ -29,6 +29,16 @@ public class GameStateService {
         return playerRegistry.computeIfAbsent(username, k -> findRandomSpawnPoint());
     }
 
+    public boolean playerExists(String username) {
+        return playerRegistry.containsKey(username);
+    }
+
+    public Position spawnPlayer(String username) {
+        Position pos = findRandomSpawnPoint();
+        playerRegistry.put(username, pos);
+        return pos;
+    }
+
     private Position findRandomSpawnPoint() {
         int rows = mapService.getRows();
         int cols = mapService.getCols();

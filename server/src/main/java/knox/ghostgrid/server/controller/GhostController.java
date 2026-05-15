@@ -28,6 +28,18 @@ public class GhostController {
         this.mapService = mapService;
     }
 
+    @PostMapping("/spawn")
+    public ResponseEntity<Object> spawn(@RequestParam String user) {
+        if (gameStateService.playerExists(user)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("status", "error", "message", "User is already active"));
+        }
+        Position pos = gameStateService.spawnPlayer(user);
+        List<List<String>> view = gameStateService.getView(pos);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MoveResponse(
+                user, pos, "success", "Spawned successfully.", view));
+    }
+
     @GetMapping("/move")
     public ResponseEntity<MoveResponse> move(
             @RequestParam String user,
