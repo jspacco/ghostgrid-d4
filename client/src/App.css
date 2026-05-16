@@ -1,0 +1,230 @@
+:root {
+  --tile-size: 60px;
+  --bg-color: #1a1a1a;
+  --floor-color: #3a3a3a;
+  --wall-color: #111;
+  --message-box-color: #ffd700;
+  --player-color: #00ff00;
+  --text-primary: #eee;
+  --text-secondary: #aaa;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.login-card {
+  background: #2a2a2a;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+.login-card input {
+  padding: 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background: #333;
+  color: white;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.login-card button {
+  padding: 0.8rem 2rem;
+  border-radius: 4px;
+  border: none;
+  background: #4a90e2;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.status-bar {
+  background: #2a2a2a;
+  padding: 10px 20px;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.status-error {
+  color: #ff4d4d;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, var(--tile-size));
+  grid-template-rows: repeat(5, var(--tile-size));
+  gap: 4px;
+  background: #000;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+.tile.floor { background-color: var(--floor-color); }
+.tile.wall { background-color: var(--wall-color); }
+.tile.message_box { background-color: var(--message-box-color); color: #000; }
+.tile.out_of_bounds { background-color: transparent; }
+.tile.player { background-color: var(--floor-color); position: relative; }
+
+.player-icon {
+  color: var(--player-color);
+  z-index: 10;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.d-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 50px);
+  grid-template-rows: repeat(2, 50px);
+  gap: 10px;
+}
+
+.d-pad button {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  border: none;
+  background: #444;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-pad button:hover { background: #555; }
+.d-pad .up { grid-column: 2; }
+.d-pad .down { grid-column: 2; grid-row: 2; }
+.d-pad .left { grid-column: 1; grid-row: 2; }
+.d-pad .right { grid-column: 3; grid-row: 2; }
+
+.interact-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.interact-btn {
+  padding: 8px 16px;
+  background: var(--message-box-color);
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: #2a2a2a;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #444;
+}
+
+.message-item {
+  padding: 10px;
+  border-bottom: 1px solid #333;
+}
+
+.message-header {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.write-message {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.write-message textarea {
+  background: #333;
+  color: white;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 4px;
+  resize: none;
+}
+
+.write-message button {
+  background: var(--message-box-color);
+  color: #000;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-btn {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
