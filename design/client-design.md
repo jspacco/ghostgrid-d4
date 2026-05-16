@@ -3,6 +3,9 @@
 ## 1. ARCHITECTURAL OVERVIEW
 A React-based single-page application (SPA) that acts as a frontend for the Ghost Grid REST API. The client maintains no local game logic; it is a "dumb" renderer that translates server responses into a visual grid and captures user input.
 
+## 1b. BOOTSTRAP MODERN SURFACE (VITE):
+Initialize a Vite + React + TypeScript workspace inside the 'client/' directory
+
 ## 2. INITIALIZATION & AUTHENTICATION
 - User Entry: On first load, the app displays a "Login" screen asking for a username.
 - Identity: Once entered, the username is stored in React state (or localStorage) and appended as the 'user' parameter to every subsequent API call.
