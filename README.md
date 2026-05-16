@@ -9,19 +9,19 @@ Instead of jumping straight into code, this project uses an API-First approach. 
 
 This is a monorepo organized by Responsibility:
 
-- ghost-grid/
-  - design/ : THE ARCHITECT'S OFFICE. Contains rest-api.md (the law), server-design.md (the engine blueprint), and client-design.md (the UI blueprint).
+- ghostgrid/
+  - design/ : THE ARCHITECT'S OFFICE. Contains ghost-grid-api.md (the law), server-design.md (the engine blueprint), and client-design.md (the UI blueprint). When the coding agent completes a task, it adds a new entry to server-changes.md or client-changes.md, which then can be used to refactor the design docs later.
   - server/ : THE ENGINE. The Spring Boot backend that manages world logic, players, and messages.
+    - server/config/ : THE WORLD DATA. Contains map.txt, the ASCII file that defines the game world.
   - client/ : THE INTERFACE. The React frontend that renders the 5x5 view for the user.
-  - config/ : THE WORLD DATA. Contains map.txt, the ASCII file that defines the game world.
   - gemini.md : THE AI GUARDRAILS. The specific instructions used to guide the Gemini CLI.
 
 ## 3. How the Pieces Fit Together
 
-1. The Map (config/map.txt): You can change the entire game world by simply editing this text file. No code changes required.
+1. The Map (server/config/map.txt): You can change the entire game world by simply editing this text file. No code changes required.
 2. The Server (server/): Reads the map file, watches for players, and serves the API. It doesn't care if the client is a website, a mobile app, or a CLI.
 3. The Client (client/): Asks the server "What do I see?" and receives a 5x5 grid. It is "dumb"—it only knows what the server shows it.
-4. The API (design/rest-api.md): This is the glue. As long as both the server and client follow this document, the system works.
+4. The API (design/ghost-grid-api.md): This is the glue. As long as both the server and client follow this document, the system works.
 
 ## 4. Learning Objectives
 As you explore this project, pay attention to:
